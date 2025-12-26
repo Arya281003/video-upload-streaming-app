@@ -1,0 +1,25 @@
+{
+  "name": "video-upload-streaming-app",
+  "version": "1.0.0",
+  "description": "Video Upload, Sensitivity Processing, and Streaming Application",
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "video",
+    "upload",
+    "streaming",
+    "sensitivity",
+    "processing"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+
