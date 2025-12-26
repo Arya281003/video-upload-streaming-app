@@ -2,6 +2,81 @@
 
 A full-stack web application for uploading videos, checking if they're safe or flagged, and streaming them. Built with Node.js, Express, MongoDB, and React.
 
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v18 or higher)
+- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+- FFmpeg (for video processing)
+
+### Installation & Run
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Arya281003/video-upload-streaming-app.git
+   cd video-upload-streaming-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   # Install backend dependencies
+   cd backend
+   npm install
+   
+   # Install frontend dependencies
+   cd ../frontend
+   npm install
+   ```
+
+3. **Setup environment variables**
+   
+   Create `backend/.env` file:
+   ```env
+   PORT=5000
+   MONGODB_URI=mongodb://localhost:27017/video-app
+   JWT_SECRET=your-secret-key-change-this
+   JWT_EXPIRE=7d
+   NODE_ENV=development
+   FRONTEND_URL=http://localhost:5173
+   ```
+   
+   **Note:** If using MongoDB Atlas, replace `MONGODB_URI` with your Atlas connection string.
+
+4. **Start MongoDB**
+   - Local MongoDB: Make sure MongoDB service is running
+   - MongoDB Atlas: Skip this step (cloud database)
+
+5. **Run the application**
+   
+   **Terminal 1 - Backend:**
+   ```bash
+   cd backend
+   npm run dev
+   ```
+   
+   **Terminal 2 - Frontend:**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+6. **Open in browser**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:5000
+
+7. **Register and use**
+   - Register a new account
+   - Choose Editor or Admin role to upload videos
+   - Start uploading and streaming videos!
+
+### Seed Sample Data (Optional)
+
+To add sample videos for testing:
+```bash
+cd backend
+npm run seed
+```
+
 ## Features
 
 - Upload videos (mp4, avi, mov, etc.)
