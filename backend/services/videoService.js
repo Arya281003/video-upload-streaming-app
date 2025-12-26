@@ -13,21 +13,21 @@ export const setIOInstance = (io) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Simulate sensitivity analysis (in production, use actual ML/AI service)
+// check if video is safe or flagged (just random for now)
 const analyzeSensitivity = async (videoPath) => {
-  // Simulate processing time
+  // wait a bit to simulate processing
   await new Promise(resolve => setTimeout(resolve, 2000));
   
-  // Random classification for demo (replace with actual analysis)
-  const isFlagged = Math.random() < 0.2; // 20% chance of being flagged
+  // randomly decide if flagged (20% chance)
+  const isFlagged = Math.random() < 0.2;
   
   return {
     sensitivityStatus: isFlagged ? 'flagged' : 'safe',
-    confidence: Math.random() * 0.3 + 0.7 // 70-100% confidence
+    confidence: Math.random() * 0.3 + 0.7
   };
 };
 
-// Get video metadata using ffmpeg
+// get video info using ffmpeg
 const getVideoMetadata = (videoPath) => {
   return new Promise((resolve, reject) => {
     ffmpeg.ffprobe(videoPath, (err, metadata) => {
@@ -51,7 +51,7 @@ const getVideoMetadata = (videoPath) => {
   });
 };
 
-// Process video: analyze sensitivity and prepare for streaming
+// process video - check sensitivity and prepare for streaming
 export const processVideo = async (videoId, userId) => {
   try {
     const video = await Video.findById(videoId);
@@ -59,21 +59,21 @@ export const processVideo = async (videoId, userId) => {
       throw new Error('Video not found');
     }
 
-    // Update status to processing
+    // start processing
     video.status = 'processing';
     video.processingProgress = 10;
     await video.save();
 
-    // Emit progress update
+    // send progress update
     if (ioInstance) {
       ioInstance.to(`user-${userId}`).emit('video-progress', {
-      videoId: video._id.toString(),
-      progress: 10,
-      status: 'processing'
+        videoId: video._id.toString(),
+        progress: 10,
+        status: 'processing'
       });
     }
 
-    // Get video metadata
+    // get video info
     try {
       const metadata = await getVideoMetadata(video.filePath);
       video.duration = metadata.duration;
@@ -94,10 +94,10 @@ export const processVideo = async (videoId, userId) => {
         });
       }
     } catch (err) {
-      console.error('Metadata extraction error:', err);
+      console.error('Error getting video metadata:', err);
     }
 
-    // Perform sensitivity analysis
+    // check sensitivity
     video.processingProgress = 50;
     await video.save();
 
@@ -122,7 +122,7 @@ export const processVideo = async (videoId, userId) => {
       });
     }
 
-    // Prepare video for streaming (copy to processed directory)
+    // copy to processed folder
     const processedDir = path.join(__dirname, '../uploads/processed');
     if (!fs.existsSync(processedDir)) {
       fs.mkdirSync(processedDir, { recursive: true });
@@ -131,7 +131,7 @@ export const processVideo = async (videoId, userId) => {
     const processedFileName = `processed-${video.filename}`;
     const processedPath = path.join(processedDir, processedFileName);
 
-    // Copy file to processed directory (in production, you might transcode/optimize here)
+    // copy file
     fs.copyFileSync(video.filePath, processedPath);
     video.processedFilePath = processedPath;
     video.processingProgress = 90;
@@ -145,12 +145,12 @@ export const processVideo = async (videoId, userId) => {
       });
     }
 
-    // Mark as completed
+    // done!
     video.status = 'completed';
     video.processingProgress = 100;
     await video.save();
 
-    // Emit completion
+    // send completion message
     if (ioInstance) {
       ioInstance.to(`user-${userId}`).emit('video-complete', {
         videoId: video._id.toString(),
@@ -160,9 +160,9 @@ export const processVideo = async (videoId, userId) => {
       });
     }
 
-    console.log(`Video ${videoId} processed successfully`);
+    console.log('Video processed:', videoId);
   } catch (error) {
-    console.error('Video processing error:', error);
+    console.error('Error processing video:', error);
     
     const video = await Video.findById(videoId);
     if (video) {

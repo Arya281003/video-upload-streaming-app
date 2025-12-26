@@ -10,6 +10,7 @@ const VideoPlayer = () => {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -125,15 +126,34 @@ const VideoPlayer = () => {
       </div>
 
       <div className="bg-white shadow rounded-lg overflow-hidden">
-        <div className="aspect-video bg-black">
-          <video
-            ref={videoRef}
-            controls
-            className="w-full h-full"
-            src={videoUrl}
-          >
-            Your browser does not support the video tag.
-          </video>
+        <div className="aspect-video bg-black flex items-center justify-center">
+          {videoError ? (
+            <div className="text-center p-8 text-white">
+              <div className="text-4xl mb-4">📹</div>
+              <h3 className="text-xl font-semibold mb-2">Video File Not Available</h3>
+              <p className="text-gray-300 mb-4">
+                This is a sample video record for demonstration purposes.
+              </p>
+              <p className="text-sm text-gray-400">
+                To stream actual videos, upload a real video file through the Upload page.
+              </p>
+              <p className="text-sm text-gray-400 mt-2">
+                You can still view all video metadata and details below.
+              </p>
+            </div>
+          ) : (
+            <video
+              ref={videoRef}
+              controls
+              className="w-full h-full"
+              src={videoUrl}
+              onError={() => {
+                setVideoError(true);
+              }}
+            >
+              Your browser does not support the video tag.
+            </video>
+          )}
         </div>
       </div>
 

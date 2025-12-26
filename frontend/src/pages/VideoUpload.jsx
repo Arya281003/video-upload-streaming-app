@@ -55,14 +55,14 @@ const VideoUpload = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      // Validate file type
+      // check file type
       const allowedTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/flv', 'video/webm', 'video/mkv'];
       if (!allowedTypes.includes(selectedFile.type)) {
         setError('Please select a valid video file (mp4, avi, mov, wmv, flv, webm, mkv)');
         return;
       }
 
-      // Validate file size (500MB)
+      // check file size (max 500MB)
       if (selectedFile.size > 500 * 1024 * 1024) {
         setError('File size must be less than 500MB');
         return;

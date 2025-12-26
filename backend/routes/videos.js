@@ -179,6 +179,15 @@ router.get('/:id/stream', async (req, res) => {
     }
 
     const videoPath = video.processedFilePath || video.filePath;
+    
+    // Check if video file exists
+    if (!fs.existsSync(videoPath)) {
+      return res.status(404).json({ 
+        message: 'Video file not found. This is a sample video record. Upload a real video file to stream it.',
+        isSample: true
+      });
+    }
+    
     const stat = fs.statSync(videoPath);
     const fileSize = stat.size;
     const range = req.headers.range;

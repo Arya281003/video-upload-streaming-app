@@ -1,48 +1,33 @@
-# Video Upload, Sensitivity Processing, and Streaming Application
+# Video Upload and Streaming App
 
-A comprehensive full-stack application that enables users to upload videos, processes them for content sensitivity analysis, and provides seamless video streaming capabilities with real-time progress tracking.
+A full-stack web application for uploading videos, checking if they're safe or flagged, and streaming them. Built with Node.js, Express, MongoDB, and React.
 
 ## Features
 
-### Core Functionality
-- **Full-Stack Architecture**: Node.js + Express + MongoDB (backend) and React + Vite (frontend)
-- **Video Management**: Complete video upload and secure storage system
-- **Content Analysis**: Process videos for sensitivity detection (safe/flagged classification)
-- **Real-Time Updates**: Display live processing progress to users via Socket.io
-- **Streaming Service**: Enable video playback using HTTP range requests
-- **Access Control**: Multi-tenant architecture with role-based permissions
+- Upload videos (mp4, avi, mov, etc.)
+- Check if videos are safe or flagged
+- Real-time progress updates while processing
+- Stream videos after processing
+- User roles: Viewer (can only watch), Editor (can upload), Admin (full access)
+- Filter and search videos
+- Dashboard to see all videos and stats
 
-### Advanced Features
-- **Multi-Tenant Architecture**: User isolation with secure data segregation
-- **Role-Based Access Control (RBAC)**:
-  - **Viewer Role**: Read-only access to assigned videos
-  - **Editor Role**: Upload, edit, and manage video content
-  - **Admin Role**: Full system access, including user management
-- **Video Processing Pipeline**:
-  1. Upload Validation: File type, size, and format verification
-  2. Storage Management: Secure file storage with proper naming conventions
-  3. Sensitivity Analysis: Automated content screening and classification
-  4. Status Updates: Real-time progress communication to the frontend
-  5. Streaming Preparation: Video optimization for efficient streaming
+## Tech Stack
 
-## Technology Stack
+**Backend:**
+- Node.js + Express
+- MongoDB
+- Socket.io (for real-time updates)
+- JWT for authentication
+- Multer for file uploads
+- FFmpeg for video processing
 
-### Backend
-- **Runtime**: Node.js (ES Modules)
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Real-Time**: Socket.io
-- **Authentication**: JWT (JSON Web Tokens)
-- **File Handling**: Multer for video uploads
-- **Video Processing**: FFmpeg (fluent-ffmpeg)
-
-### Frontend
-- **Build Tool**: Vite
-- **Framework**: React 18
-- **State Management**: Context API
-- **Styling**: Tailwind CSS
-- **HTTP Client**: Axios
-- **Real-Time**: Socket.io client
+**Frontend:**
+- React
+- Vite
+- Tailwind CSS
+- Axios
+- Socket.io client
 
 ## Project Structure
 
@@ -79,12 +64,12 @@ A comprehensive full-stack application that enables users to upload videos, proc
 └── README.md
 ```
 
-## Installation & Setup
+## Setup
 
-### Prerequisites
-- Node.js (v18 or higher)
-- MongoDB (local installation or MongoDB Atlas)
-- FFmpeg (for video processing)
+**Requirements:**
+- Node.js (v18+)
+- MongoDB (local or MongoDB Atlas)
+- FFmpeg
 
 #### Installing FFmpeg
 

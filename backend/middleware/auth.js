@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
+// check if user is logged in
 export const authenticate = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -23,6 +24,7 @@ export const authenticate = async (req, res, next) => {
   }
 };
 
+// check if user has the right role
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user) {
